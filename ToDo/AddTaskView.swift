@@ -18,13 +18,22 @@ struct AddTaskView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            if UIDevice.isIPad {
+                Spacer()
+            }
             HStack {
                 Text("Task Title")
-                    .font(.system(size: 15, weight: .semibold))
+                    .if(UIDevice.isIPad, transform: { view in
+                        view.font(.system(size: 20, weight: .semibold))
+                    })
+                    .if(UIDevice.isIPhone, transform: { view in
+                        view.font(.system(size: 15, weight: .semibold))
+                    })
 
                 Spacer()
-                
-                if horizontalSizeClass == .regular &&
+
+                if UIDevice.isIPad ||
+                    horizontalSizeClass == .regular &&
                     verticalSizeClass == .compact ||
                     horizontalSizeClass == .compact &&
                     verticalSizeClass == .compact {
@@ -93,6 +102,6 @@ struct AddTaskView: View {
     }
 }
 
-//#Preview {
-//    AddTaskView(tasks: .constant([]))
-//}
+#Preview {
+    AddTaskView(tasks: .constant([]))
+}
