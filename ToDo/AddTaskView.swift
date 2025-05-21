@@ -13,12 +13,31 @@ struct AddTaskView: View {
     @State var showInvalidTitleError = false
     @Binding var tasks: [Task]
     @Environment(\.dismiss) var dismiss
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Task Title")
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.top, 30)
+            HStack {
+                Text("Task Title")
+                    .font(.system(size: 15, weight: .semibold))
+
+                Spacer()
+                
+                if horizontalSizeClass == .regular &&
+                    verticalSizeClass == .compact ||
+                    horizontalSizeClass == .compact &&
+                    verticalSizeClass == .compact {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.black)
+                    }
+                }
+            }
+            .padding(.top, 30)
 
             TextField("Task Title", text: $title)
                 .font(.system(size: 15))
