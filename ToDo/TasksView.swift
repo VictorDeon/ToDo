@@ -50,6 +50,7 @@ struct TasksView: View {
                 AddTaskView(tasks: $tasks)
             })
             .toolbar {
+                #if os(iOS)
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
                         action: {
@@ -61,6 +62,19 @@ struct TasksView: View {
                         }
                     )
                 }
+                #elseif os(macOS)
+                ToolbarItem {
+                    Button(
+                        action: {
+                            addTasks = true
+                        },
+                        label: {
+                            Image(systemName: "plus")
+                                .foregroundStyle(Color.black)
+                        }
+                    )
+                }
+                #endif
             }
         }
     }
@@ -70,7 +84,8 @@ struct TasksView: View {
     }
     
 }
-//
-//#Preview {
-//    TasksView()
-//}
+
+#Preview {
+    TasksView()
+        .preferredColorScheme(.light)
+}

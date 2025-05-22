@@ -12,6 +12,7 @@ struct ToDoApp: App {
     var body: some Scene {
         WindowGroup {
             TasksView()
+                .preferredColorScheme(.light)
         }
     }
 }
