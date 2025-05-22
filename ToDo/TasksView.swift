@@ -41,8 +41,11 @@ struct TasksView: View {
                                 }
                             }
                         )
+                        .buttonStyle(.plain)
+                        .padding(10)
                     }
                     .onDelete(perform: delete)
+                    .listRowSeparator(.hidden)
                 }
             }
             .navigationTitle("Tasks")

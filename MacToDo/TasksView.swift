@@ -16,33 +16,43 @@ struct TasksView: View {
             VStack {
                 List {
                     ForEach($tasks) { $task in
-                        Button(
-                            action: {
-                                task.isComplete.toggle()
-                            },
-                            label: {
-                                HStack {
-                                    Image(systemName: task.isComplete ? "checkmark.circle" : "circle")
-                                        .font(.system(size: 16))
-                                        .foregroundStyle(.black)
+                        HStack {
+                            Button(
+                                action: {
+                                    task.isComplete.toggle()
+                                },
+                                label: {
+                                    HStack {
+                                        Image(systemName: task.isComplete ? "checkmark.circle" : "circle")
+                                            .font(.system(size: 16))
+                                            .foregroundStyle(.black)
 
-                                    Text(task.title)
-                                        .font(.system(size: 16))
-                                        .foregroundStyle(.black)
-
-                                    Spacer()
-
-                                    Text(task.priority.title)
-                                        .font(.system(size: 15, weight: .bold))
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 5)
-                                        .foregroundStyle(task.priority.color)
-                                        .background(Capsule().fill(task.priority.color.opacity(0.4)))
+                                        Text(task.title)
+                                            .font(.system(size: 16))
+                                            .foregroundStyle(.black)
+                                    }
                                 }
-                            }
-                        )
+                            )
+                            .buttonStyle(.plain)
+                            .padding(10)
+                            
+                            Spacer()
+                            
+                            Text(task.priority.title)
+                                .font(.system(size: 15, weight: .bold))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 5)
+                                .foregroundStyle(task.priority.color)
+                                .background(Capsule().fill(task.priority.color.opacity(0.4)))
+                            
+                            Button(action: {
+                                delete(at: task.id)
+                            }, label: {
+                                Image(systemName: "trash")
+                            })
+                        }
                     }
-                    .onDelete(perform: delete)
+                    .listRowSeparator(.hidden)
                 }
             }
             .navigationTitle("Tasks")
@@ -65,8 +75,8 @@ struct TasksView: View {
         }
     }
     
-    private func delete(at offsets: IndexSet) {
-        tasks.remove(atOffsets: offsets)
+    private func delete(at id: UUID) {
+        tasks.removeAll(where: { $0.id == id })
     }
     
 }
