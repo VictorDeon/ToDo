@@ -18,33 +18,20 @@ struct AddTaskView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if UIDevice.isIPad {
-                Spacer()
-            }
+            Spacer()
             HStack {
                 Text("Task Title")
-                    .if(UIDevice.isIPad, transform: { view in
-                        view.font(.system(size: 20, weight: .semibold))
-                    })
-                    .if(UIDevice.isIPhone, transform: { view in
-                        view.font(.system(size: 15, weight: .semibold))
-                    })
+                    .font(.system(size: 15, weight: .semibold))
 
                 Spacer()
 
-                if UIDevice.isIPad ||
-                    horizontalSizeClass == .regular &&
-                    verticalSizeClass == .compact ||
-                    horizontalSizeClass == .compact &&
-                    verticalSizeClass == .compact {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(.black)
-                    }
-                }
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.primary)
+                }.buttonStyle(.plain)
             }
             .padding(.top, 30)
 
@@ -83,9 +70,10 @@ struct AddTaskView: View {
                         .background(Color.green)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
-            )
+            ).buttonStyle(.plain)
             Spacer()
         }
+        .frame(width: 350)
         .padding(.horizontal)
         .alert(
             "Invalid Title",

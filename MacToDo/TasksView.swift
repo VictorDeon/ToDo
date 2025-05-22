@@ -50,7 +50,7 @@ struct TasksView: View {
                 AddTaskView(tasks: $tasks)
             })
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem {
                     Button(
                         action: {
                             addTasks = true
